@@ -151,7 +151,6 @@ nth($array2, $index)
     
     text-align: center;
     line-height: 120%;
-    overflow: hidden;
     box-sizing: border-box;
 		font-size: 10px;
 		white-space: nowrap;
@@ -159,7 +158,7 @@ nth($array2, $index)
       //インデックス取得
       $index: index($names, $name);
       &:nth-child(#{$index}){
-        //'%'を加えて文字列かしてしまうと「'n%'」となってしまうので#{}で囲んで「n%」にする
+        //'%'を加えて文字列化してしまうと「'n%'」となってしまうので#{}で囲んで「n%」にする
         left: #{(nth($xs, $index) - 1) * $width + '%'};
         //margin-bottom, margin-topも%単位の数値を設定するとwidthの値を基とした計算をしてくれる。cssのみで横軸と縦軸の位置を同じスケールで調節するときに使える
         margin-top: #{(nth($ys, $index) - 1) * $width + '%'};
