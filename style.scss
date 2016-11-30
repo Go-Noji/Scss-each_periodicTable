@@ -1,63 +1,658 @@
 //eachで周期表を作る
 //htmlは極力シンプルに設定
 //cssの手打ちでは凄まじい労力を使うところを、JS等の配列+繰り返し処理のノリでスタイル情報を格納・格納できる
-
-$PERCENT: 100;//パーセントのMAX値
-$COLUMN: 18;//周期表の列数
-$width: $PERCENT / $COLUMN;//カラム一つあたりの幅
-
-$nonmetallicColor: #388E3C;//非金属元素
-$noblegasColor: #FFA000;//希ガス
-$alkalimetalColor: #303F9F;//アルカリ金属
-$alkaliearthmetalColor: #7B1FA2;//アルカリ土類金属
-$transitionelementColor: #616161;//遷移元素
-$basemetalColor: #0097A7;//卑金属
-$metalloidColor: #00796B;//半金属
-$halogenColor: #d32f2f;//ハロゲン
-$lanthanoidColor: #5D4037;//ランタノイド
-$actinoidColor: #455A64;//アクチノイド
-
-$solidColor: #4527A0;//固体
-$liquidColor: #1565C0;//液体
-$gasColor: #558B2F;//気体
-
+$PERCENT: 100; //パーセントのMAX値
+$COLUMN: 18; //周期表の列数
+$width: $PERCENT / $COLUMN; //カラム一つあたりの幅
+$nonmetallicColor: #388E3C; //非金属元素
+$noblegasColor: #FFA000; //希ガス
+$alkalimetalColor: #303F9F; //アルカリ金属
+$alkaliearthmetalColor: #7B1FA2; //アルカリ土類金属
+$transitionelementColor: #616161; //遷移元素
+$basemetalColor: #0097A7; //卑金属
+$metalloidColor: #00796B; //半金属
+$halogenColor: #d32f2f; //ハロゲン
+$lanthanoidColor: #5D4037; //ランタノイド
+$actinoidColor: #455A64; //アクチノイド
+$solidColor: #4527A0; //固体
+$liquidColor: #1565C0; //液体
+$gasColor: #558B2F; //気体
 //元素の属性説明部分の文字色
-$attrs: $alkalimetalColor, $alkaliearthmetalColor, $transitionelementColor, $basemetalColor, $metalloidColor, $nonmetallicColor, $halogenColor, $noblegasColor, $lanthanoidColor, $actinoidColor;
+$attrs: $alkalimetalColor,
+$alkaliearthmetalColor,
+$transitionelementColor,
+$basemetalColor,
+$metalloidColor,
+$nonmetallicColor,
+$halogenColor,
+$noblegasColor,
+$lanthanoidColor,
+$actinoidColor;
 //元素の室温における状態説明部分の文字色
-$states: $solidColor, $liquidColor, $gasColor;
-
+$states: $solidColor,
+$liquidColor,
+$gasColor;
 //元素記号
-$names:'H', 'He', 'Li', 'Be', 'B', 'C', 'N', 'O', 'F', 'Ne', 'Na', 'Mg', 'Al', 'Si', 'P', 'S', 'Cl', 'Ar', 'K', 'Ca', 'Sc', 'Ti', 'V', 'Cr', 'Mn', 'Fe', 'Co', 'Ni', 'Cu', 'Zn', 'Ga', 'Ge', 'As', 'Se', 'Br', 'Kr', 'Rb', 'Sr', 'Y', 'Zr', 'Nb', 'Mo', 'Tc', 'Ru', 'Rh', 'Pd', 'Ag', 'Cd', 'In', 'Sn', 'Sb', 'Te', 'I', 'Xe', 'Cs', 'Ba', 'La', 'Ce', 'Pr', 'Nd', 'Pm', 'Sm', 'Eu', 'Gd', 'Tb', 'Dy', 'Ho', 'Er', 'Tm', 'Yb', 'Lu', 'Hf', 'Ta', 'W', 'Re', 'Os', 'Ir', 'Pt', 'Au', 'Hg', 'Tl', 'Pb', 'Bi', 'Po', 'At', 'Rn', 'Fr', 'Ra', 'Ac', 'Th', 'Pa', 'U', 'Np', 'Pu', 'Am', 'Cm', 'Bk', 'Cf', 'Es', 'Fm', 'Md', 'No', 'Lr', 'Rf', 'Db', 'Sg', 'Bh', 'Hs', 'Mt', 'Ds', 'Rg', 'Cn', 'Uut', 'Fl', 'Uup', 'Lv', 'Uus', 'Uuo';
-
+$names:'H',
+'He',
+'Li',
+'Be',
+'B',
+'C',
+'N',
+'O',
+'F',
+'Ne',
+'Na',
+'Mg',
+'Al',
+'Si',
+'P',
+'S',
+'Cl',
+'Ar',
+'K',
+'Ca',
+'Sc',
+'Ti',
+'V',
+'Cr',
+'Mn',
+'Fe',
+'Co',
+'Ni',
+'Cu',
+'Zn',
+'Ga',
+'Ge',
+'As',
+'Se',
+'Br',
+'Kr',
+'Rb',
+'Sr',
+'Y',
+'Zr',
+'Nb',
+'Mo',
+'Tc',
+'Ru',
+'Rh',
+'Pd',
+'Ag',
+'Cd',
+'In',
+'Sn',
+'Sb',
+'Te',
+'I',
+'Xe',
+'Cs',
+'Ba',
+'La',
+'Ce',
+'Pr',
+'Nd',
+'Pm',
+'Sm',
+'Eu',
+'Gd',
+'Tb',
+'Dy',
+'Ho',
+'Er',
+'Tm',
+'Yb',
+'Lu',
+'Hf',
+'Ta',
+'W',
+'Re',
+'Os',
+'Ir',
+'Pt',
+'Au',
+'Hg',
+'Tl',
+'Pb',
+'Bi',
+'Po',
+'At',
+'Rn',
+'Fr',
+'Ra',
+'Ac',
+'Th',
+'Pa',
+'U',
+'Np',
+'Pu',
+'Am',
+'Cm',
+'Bk',
+'Cf',
+'Es',
+'Fm',
+'Md',
+'No',
+'Lr',
+'Rf',
+'Db',
+'Sg',
+'Bh',
+'Hs',
+'Mt',
+'Ds',
+'Rg',
+'Cn',
+'Uut',
+'Fl',
+'Uup',
+'Lv',
+'Uus',
+'Uuo';
 //元素の属性情報
-$attrTables: $nonmetallicColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $metalloidColor, $nonmetallicColor, $nonmetallicColor, $nonmetallicColor, $halogenColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $basemetalColor, $metalloidColor, $nonmetallicColor, $nonmetallicColor, $halogenColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $basemetalColor, $metalloidColor, $metalloidColor, $nonmetallicColor, $halogenColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $basemetalColor, $basemetalColor,  $metalloidColor, $metalloidColor, $halogenColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $lanthanoidColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $basemetalColor, $basemetalColor, $basemetalColor, $metalloidColor, $halogenColor, $noblegasColor, $alkalimetalColor, $alkaliearthmetalColor, $actinoidColor,  $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor, $actinoidColor,  $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $transitionelementColor, $basemetalColor, $basemetalColor, $basemetalColor, $basemetalColor, $halogenColor, $noblegasColor;
-
+$attrTables: $nonmetallicColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$metalloidColor,
+$nonmetallicColor,
+$nonmetallicColor,
+$nonmetallicColor,
+$halogenColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$basemetalColor,
+$metalloidColor,
+$nonmetallicColor,
+$nonmetallicColor,
+$halogenColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$basemetalColor,
+$metalloidColor,
+$metalloidColor,
+$nonmetallicColor,
+$halogenColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$basemetalColor,
+$basemetalColor,
+$metalloidColor,
+$metalloidColor,
+$halogenColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$lanthanoidColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$basemetalColor,
+$basemetalColor,
+$basemetalColor,
+$metalloidColor,
+$halogenColor,
+$noblegasColor,
+$alkalimetalColor,
+$alkaliearthmetalColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$actinoidColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$transitionelementColor,
+$basemetalColor,
+$basemetalColor,
+$basemetalColor,
+$basemetalColor,
+$halogenColor,
+$noblegasColor;
 //元素の室温における状態情報
-$stateTables: $gasColor, $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $gasColor, $gasColor, $gasColor, $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $gasColor, $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $liquidColor, $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $liquidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor,  $gasColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor, $solidColor;
-
+$stateTables: $gasColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$gasColor,
+$gasColor,
+$gasColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$gasColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$liquidColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$liquidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$gasColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor,
+$solidColor;
 //元素の列番号（ランタノイド・アクチノイドは便宜上の番号）
-$xs: 1, 18, 1, 2, 13, 14, 15, 16, 17, 18, 1, 2,  13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18;
-
+$xs: 1,
+18,
+1,
+2,
+13,
+14,
+15,
+16,
+17,
+18,
+1,
+2,
+13,
+14,
+15,
+16,
+17,
+18,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18,
+1,
+2,
+3,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+4,
+5,
+6,
+7,
+8,
+9,
+10,
+11,
+12,
+13,
+14,
+15,
+16,
+17,
+18;
 //元素の行番号（ランタノイドは9、アクチノイドは10を便宜的に設定）
-$ys: 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 7, 7, 7, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 10, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7, 7;
-
-@mixin names{
+$ys: 1,
+1,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+2,
+3,
+3,
+3,
+3,
+3,
+3,
+3,
+3,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+4,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+5,
+6,
+6,
+6,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+9,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+6,
+7,
+7,
+7,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+10,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7,
+7;
+@mixin names {
   margin-left: 10px;
   font-size: 16px;
   font-weight: 700;
 }
 
 //初期設定
-html, body, ul, ol, li, h1, h2{
+html,
+body,
+ul,
+ol,
+li,
+h1,
+h2 {
   margin: 0;
   padding: 0;
 }
-li{
+
+li {
   list-style-type: none;
 }
-body{
+
+body {
   font-family: "游ゴシック体", "Yu Gothic", YuGothic, "ヒラギノ角ゴ Pro", "Hiragino Kaku Gothic Pro", "メイリオ", "Meiryo", sans-serif;
 }
+
 
 /*
 基礎知識
@@ -80,6 +675,8 @@ $valは@eachの中で使うことになる、@eachを使う時に初めて宣言
 @eachの{}内では$attrが持つ要素の数だけ繰り返し処理されるが、1回目の繰り返し時に$valは$attrの1番目の要素が代入された変数として使える。
 同様に2回目の繰り返し時には$attrの2番目の要素、n回目の繰り返し時には$attrのn番目の要素が代入されていることになる。
 */
+
+
 /*
 インデックスについて
 
@@ -101,90 +698,88 @@ nth($array2, $index)
 とすると$array2の中の$index番目にある要素が返ってくる。
 */
 
-.colorDefine{
+.colorDefine {
   width: 20%;
   min-width: 320px;
   display: flex;
   justify-content: space-between;
 }
-.attrs{
-  dd{
+
+.attrs {
+  dd {
     @include names;
-    li{
-      @each $attr in $attrs{
+    li {
+      @each $attr in $attrs {
         //インデックス取得
         $index: index($attrs, $attr);
-        &:nth-child(#{$index}){
+        &:nth-child(#{$index}) {
           color: $attr;
         }
       }
     }
   }
 }
-.states{
-  dd{
+
+.states {
+  dd {
     @include names;
-    li{
-      @each $state in $states{
+    li {
+      @each $state in $states {
         //インデックス番号取得
         $index: index($states, $state);
-        &:nth-child(#{$index}){
+        &:nth-child(#{$index}) {
           color: $state;
         }
       }
     }
   }
 }
-.periodic{
+
+.periodic {
   position: relative;
   box-sizing: border-box;
   min-width: 1650px;
-  li{
+  li {
     position: absolute;
-    
     //'%'を加えて文字列かしてしまうと「'n%'」となってしまうので#{}で囲んで「n%」にする
     width: #{$width + '%'};
-    
     //実はpadding-bottom, padding-topに%単位の数値を設定するとwidthの値を基とした計算をしてくれるのでcssで確実な正方形が作れる。
     height: 0;
     padding-bottom: #{$width + '%'};
-    
     text-align: center;
     line-height: 120%;
     box-sizing: border-box;
-		font-size: 10px;
-		white-space: nowrap;
-    @each $name in $names{
+    font-size: 10px;
+    white-space: nowrap;
+    @each $name in $names {
       //インデックス取得
       $index: index($names, $name);
-      &:nth-child(#{$index}){
+      &:nth-child(#{$index}) {
         //'%'を加えて文字列化してしまうと「'n%'」となってしまうので#{}で囲んで「n%」にする
         left: #{(nth($xs, $index) - 1) * $width + '%'};
         //margin-bottom, margin-topも%単位の数値を設定するとwidthの値を基とした計算をしてくれる。cssのみで横軸と縦軸の位置を同じスケールで調節するときに使える
         margin-top: #{(nth($ys, $index) - 1) * $width + '%'};
-        
         color: nth($stateTables, $index);
         border-bottom: nth($attrTables, $index) solid 6px;
         border-left: transparent solid 15px;
         border-right: transparent solid 15px;
-        &:before{
+        &:before {
           //#{}内であればクオーテーションの中でも変数の展開が行われる。変数の中身は数値だが、文字列（hogeではなく'hoge'）のプロパティが欲しいときはこのようにすると良い
           content: '#{$index}';
-          
           display: block;
           margin-top: 30%;
           font-size: 12px;
         }
-        &:after{
-					content: $name;
-					display: block;
-					width: 90%;
-					height: 0;
-					padding-bottom: 40%;
-					position: absolute;
-					margin-top: 30%;
-					left: 5%;
-					font-size: 24px;
+        &:after {
+          content: $name;
+          display: block;
+          width: 90%;
+          height: 0;
+          padding-bottom: 40%;
+          position: absolute;
+          margin-top: 30%;
+          left: 5%;
+          font-size: 24px;
           font-weight: 700;
         }
       }
